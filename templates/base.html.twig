@@ -13,6 +13,16 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <main class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <article class="flash-{{ label }}">
+                        {{ message }}
+                    </article>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </main>
     </body>
 </html>

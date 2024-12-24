@@ -1,0 +1,12 @@
+.flash- {
+    &success, &error {
+        color: white;
+    }
+
+    &success {
+        background: #007A50;
+    }
+    &error {
+        background: #AF291D;
+    }
+}
