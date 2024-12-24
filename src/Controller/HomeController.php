@@ -11,6 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class HomeController extends AbstractController
@@ -57,5 +58,33 @@ class HomeController extends AbstractController
             'form' => $form,
             'base64' => $base64Image,
         ]);
+    }
+
+    #[Route('/base64', name: 'base64')]
+    public function saveImageContent(
+        SluggerInterface $slugger,
+        #[Autowire('%upload_dir%')] string $uploadDir,
+    ): Response {
+        $filesystem = new Filesystem();
+
+        if(!$filesystem->exists($uploadDir . '/base64')) {
+            $filesystem->mkdir($uploadDir . '/base64');
+        }
+
+        /**
+         * @var string $base64Image
+         */
+        $base64Image = $this->getParameter('base64');
+
+        try {
+            $filesystem->dumpFile($uploadDir . '/base64/' . uniqid() . '.png', base64_decode($base64Image));
+
+            // Same as above
+            // file_put_contents($uploadDir . '/base64/' . uniqid() . '.png', base64_decode($base64Image));
+        } catch (IOException $e) {
+            throw $e;
+        }
+
+        return new Response('Image is saved !', Response::HTTP_OK);
     }
 }
