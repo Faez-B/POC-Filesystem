@@ -29,10 +29,14 @@ class HomeController extends AbstractController
 
         $form = $this->createForm(ProductType::class);
         
+        $base64Image = '';
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {         
             /** @var UploadedFile $file */   
             $file = $form->get('file')->getData();
+
+            $base64Image = base64_encode(file_get_contents($file->getPathname()));
 
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             // this is needed to safely include the file name as part of the URL
@@ -51,6 +55,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'form' => $form,
+            'base64' => $base64Image,
         ]);
     }
 }

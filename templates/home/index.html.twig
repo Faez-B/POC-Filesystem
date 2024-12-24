@@ -7,4 +7,9 @@
         {{ form_widget(form) }}
         <button type="submit">Save</button>
     {{ form_end(form) }}
+
+    {% if base64 is defined and not base64 is empty %}
+        <article id="base64">{{ base64|u.truncate(200, '...') }}</article>
+        <button class='contrast'>Copy to clipboard</button>
+    {% endif %}
 {% endblock %}
