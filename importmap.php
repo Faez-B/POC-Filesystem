@@ -16,4 +16,11 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@picocss/pico' => [
+        'version' => '2.0.6',
+    ],
+    '@picocss/pico/css/pico.min.css' => [
+        'version' => '2.0.6',
+        'type' => 'css',
+    ],
 ];
