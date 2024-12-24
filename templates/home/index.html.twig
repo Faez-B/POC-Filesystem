@@ -9,7 +9,8 @@
     {{ form_end(form) }}
 
     {% if base64 is defined and not base64 is empty %}
-        <article id="base64">{{ base64|u.truncate(200, '...') }}</article>
+        <article>{{ base64|u.truncate(200, '...') }}</article>
+        <article id="base64" style='display: none;'>{{ base64 }}</article>
         <button class='contrast'>Copy to clipboard</button>
     {% endif %}
 {% endblock %}

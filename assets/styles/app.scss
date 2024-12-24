@@ -10,3 +10,12 @@
         background: #AF291D;
     }
 }
+
+button {
+    &.contrast {
+        &:focus {
+            color: white;
+            background-color: #007A50;
+        }
+    }
+}
